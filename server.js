@@ -52,6 +52,18 @@ app.post('/create-preferences', async (req, res) => {  // New block of code to h
   res.send('Preferences created successfully');
 });
 
+app.get('/get-preferences/:userId', async (req, res) => {  
+  let docRef = db.collection('preferences').doc(req.params.userId);
+
+  let doc = await docRef.get();
+  if (!doc.exists) {
+    res.status(404).send('No preferences found');
+  } else {
+    res.send(doc.data());
+  }
+});
+
+
 app.get('/recipes/:id', async (req, res) => {
   // code to fetch a specific recipe from Firestore
 });
